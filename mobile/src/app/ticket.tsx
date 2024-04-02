@@ -1,4 +1,5 @@
 import { Header } from '@/components/header'
+import { Credential } from '@/components/credential'
 import { StatusBar, View } from 'react-native'
 
 export default function Ticket() {
@@ -7,6 +8,8 @@ export default function Ticket() {
       <StatusBar barStyle="light-content" />
 
       <Header title="Minha Credencial" />
+
+      <Credential />
     </View>
   )
 }
