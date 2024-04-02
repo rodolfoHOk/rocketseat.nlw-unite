@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import {
   Alert,
+  Modal,
   ScrollView,
   StatusBar,
   Text,
@@ -13,9 +14,11 @@ import { Header } from '@/components/header'
 import { Credential } from '@/components/credential'
 import { Button } from '@/components/button'
 import { colors } from '@/styles/colors'
+import { QRCode } from '@/components/qrcode'
 
 export default function Ticket() {
   const [image, setImage] = useState('')
+  const [expandeQRCode, setExpandeQRCode] = useState(false)
 
   async function handleSelectImage() {
     try {
@@ -45,7 +48,11 @@ export default function Ticket() {
         contentContainerClassName="px-8 pb-8"
         showsVerticalScrollIndicator={false}
       >
-        <Credential image={image} onChangeAvatar={handleSelectImage} />
+        <Credential
+          image={image}
+          onChangeAvatar={handleSelectImage}
+          onExpandQRCode={() => setExpandeQRCode(true)}
+        />
 
         <FontAwesome
           name="angle-double-down"
@@ -70,6 +77,21 @@ export default function Ticket() {
           </Text>
         </TouchableOpacity>
       </ScrollView>
+
+      <Modal visible={expandeQRCode} statusBarTranslucent animationType="fade">
+        <View className="flex-1 bg-green-500 items-center justify-center">
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => setExpandeQRCode(false)}
+          >
+            <QRCode value={'teste'} size={300} />
+
+            <Text className="font-body text-sm text-orange-500 text-center mt-10">
+              Fechar
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   )
 }

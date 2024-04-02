@@ -14,6 +14,8 @@
 - expo-font
 - @expo-google-fonts/roboto
 - expo-image-picker
+- react-native-svg
+- react-native-qrcode-svg
 
 ## Links úteis
 
