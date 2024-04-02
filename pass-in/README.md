@@ -1,4 +1,4 @@
-# NLW Unite
+# NLW Unite Backend Java
 
 > Evento da RocketSeat
 

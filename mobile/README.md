@@ -1,4 +1,4 @@
-# NLW Unite
+# NLW Unite Mobile
 
 > Evento da RocketSeat
 
