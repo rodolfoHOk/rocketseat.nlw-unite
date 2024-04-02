@@ -18,3 +18,5 @@
 - [NativeWind Get Start with Expo Router](https://www.nativewind.dev/v4/getting-started/expo-router)
 
 - [Tailwind CSS](https://tailwindcss.com/)
+
+- [Icons Expo](https://icons.expo.fyi/Index)
