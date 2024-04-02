@@ -7,14 +7,16 @@
 - Java
 - Maven
 - Spring Framework
+- HyperSQL Database
 
-### Bibliotecas adicionais
+### Bibliotecas
 
 - Spring WEB
 - Spring Data JPA
 - Flyway Migration
 - Spring Boot DevTools
 - Lombok
+- HyperSQL Database
 
 ## Links úteis
 
