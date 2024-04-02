@@ -5,7 +5,6 @@ import br.com.rocketseat.passin.domain.event.exceptions.EventNotFoundException;
 import br.com.rocketseat.passin.dto.event.EventIdDTO;
 import br.com.rocketseat.passin.dto.event.EventRequestDTO;
 import br.com.rocketseat.passin.dto.event.EventResponseDTO;
-import br.com.rocketseat.passin.repositories.AttendeeRepository;
 import br.com.rocketseat.passin.repositories.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,12 +16,12 @@ import java.text.Normalizer;
 public class EventService {
 
     private final EventRepository eventRepository;
-    private final AttendeeRepository attendeeRepository;
+    private final AttendeeService attendeeService;
 
     public EventResponseDTO getEventDetail(String eventId){
         var event = this.eventRepository.findById(eventId)
                 .orElseThrow(() -> new EventNotFoundException(STR."Event not found with ID: \{eventId}"));
-        var attendees = this.attendeeRepository.findByEventId(eventId);
+        var attendees = this.attendeeService.getAllAttendeesFromEvent(eventId);
         return new EventResponseDTO(event, attendees.size());
     }
 
