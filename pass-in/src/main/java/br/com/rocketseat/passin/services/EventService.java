@@ -1,6 +1,7 @@
 package br.com.rocketseat.passin.services;
 
 import br.com.rocketseat.passin.domain.event.Event;
+import br.com.rocketseat.passin.domain.event.exceptions.EventNotFoundException;
 import br.com.rocketseat.passin.dto.event.EventIdDTO;
 import br.com.rocketseat.passin.dto.event.EventRequestDTO;
 import br.com.rocketseat.passin.dto.event.EventResponseDTO;
@@ -20,7 +21,7 @@ public class EventService {
 
     public EventResponseDTO getEventDetail(String eventId){
         var event = this.eventRepository.findById(eventId)
-                .orElseThrow(() -> new RuntimeException(STR."Event not found with ID: \{eventId}"));
+                .orElseThrow(() -> new EventNotFoundException(STR."Event not found with ID: \{eventId}"));
         var attendees = this.attendeeRepository.findByEventId(eventId);
         return new EventResponseDTO(event, attendees.size());
     }
