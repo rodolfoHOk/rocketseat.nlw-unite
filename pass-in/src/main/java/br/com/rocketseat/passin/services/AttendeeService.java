@@ -1,6 +1,7 @@
 package br.com.rocketseat.passin.services;
 
 import br.com.rocketseat.passin.domain.attendee.Attendee;
+import br.com.rocketseat.passin.domain.attendee.exceptions.AttendeeAlreadyExistException;
 import br.com.rocketseat.passin.domain.checkin.CheckIn;
 import br.com.rocketseat.passin.dto.attendee.AttendeeDetails;
 import br.com.rocketseat.passin.dto.attendee.AttendeesListResponseDTO;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +33,16 @@ public class AttendeeService {
             return new AttendeeDetails(attendee.getId(), attendee.getName(), attendee.getEmail(), attendee.getCreatedAt(), checkedInAt);
         }).toList();
         return new AttendeesListResponseDTO(attendeeDetailsList);
+    }
+
+    public void verifyAttendeeSubscription(String eventId, String email){
+        Optional<Attendee> isAttendeeRegistered = this.attendeeRepository.findByEventIdAndEmail(eventId, email);
+        if(isAttendeeRegistered.isPresent())
+            throw new AttendeeAlreadyExistException("Attendee already registered");
+    }
+
+    public Attendee registerAttendee(Attendee newAttendee){
+        this.attendeeRepository.save(newAttendee);
+        return newAttendee;
     }
 }
