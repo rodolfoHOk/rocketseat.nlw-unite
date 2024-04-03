@@ -2,6 +2,7 @@ package br.com.rocketseat.passin.config;
 
 import br.com.rocketseat.passin.domain.attendee.exceptions.AttendeeAlreadyExistException;
 import br.com.rocketseat.passin.domain.attendee.exceptions.AttendeeNotFoundException;
+import br.com.rocketseat.passin.domain.checkin.exceptions.CheckInAlreadyExistsException;
 import br.com.rocketseat.passin.domain.event.exceptions.EventFullException;
 import br.com.rocketseat.passin.domain.event.exceptions.EventNotFoundException;
 import br.com.rocketseat.passin.dto.ErrorResponseDTO;
@@ -35,5 +36,11 @@ public class ExceptionEntityHandler {
     public ResponseEntity<ErrorResponseDTO> handleAttendeeFound(AttendeeNotFoundException exception){
         var errorResponse = new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(), exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(CheckInAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponseDTO> handleCheckInAlreadyExist(CheckInAlreadyExistsException exception){
+        var errorResponse = new ErrorResponseDTO(HttpStatus.CONFLICT.value(), exception.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 }

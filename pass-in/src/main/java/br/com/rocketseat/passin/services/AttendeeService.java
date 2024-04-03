@@ -9,7 +9,6 @@ import br.com.rocketseat.passin.dto.attendee.AttendeeBadgeResponseDTO;
 import br.com.rocketseat.passin.dto.attendee.AttendeeDetails;
 import br.com.rocketseat.passin.dto.attendee.AttendeesListResponseDTO;
 import br.com.rocketseat.passin.repositories.AttendeeRepository;
-import br.com.rocketseat.passin.repositories.CheckInRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -23,7 +22,7 @@ import java.util.Optional;
 public class AttendeeService {
 
     private final AttendeeRepository attendeeRepository;
-    private final CheckInRepository checkInRepository;
+    private final CheckInService checkInService;
 
     public List<Attendee> getAllAttendeesFromEvent(String eventId){
         return this.attendeeRepository.findByEventId(eventId);
@@ -32,9 +31,10 @@ public class AttendeeService {
     public AttendeesListResponseDTO getEventAttendees(String eventId){
         var attendeeList = this.getAllAttendeesFromEvent(eventId);
         var attendeeDetailsList = attendeeList.stream().map(attendee -> {
-            var checkIn = this.checkInRepository.findByAttendeeId(attendee.getId());
+            var checkIn = this.checkInService.getCheckIn(attendee.getId());
             var checkedInAt = checkIn.<LocalDateTime>map(CheckIn::getCreatedAt).orElse(null);
-            return new AttendeeDetails(attendee.getId(), attendee.getName(), attendee.getEmail(), attendee.getCreatedAt(), checkedInAt);
+            return new AttendeeDetails(
+                    attendee.getId(), attendee.getName(), attendee.getEmail(), attendee.getCreatedAt(), checkedInAt);
         }).toList();
         return new AttendeesListResponseDTO(attendeeDetailsList);
     }
@@ -55,8 +55,17 @@ public class AttendeeService {
         var uri = uriComponentsBuilder.path("/attendees/{attendeeId}/check-in").buildAndExpand(attendeeId)
                 .toUri().toString();
         AttendeeBadgeDTO attendeeBadgeDTO = new AttendeeBadgeDTO(
-                attendee.getName(), attendee.getEmail(), uri, attendee.getEvent().getId());
+                attendee.getId(),
+                attendee.getName(),
+                attendee.getEmail(),
+                uri,
+                attendee.getEvent().getTitle());
         return new AttendeeBadgeResponseDTO(attendeeBadgeDTO);
+    }
+
+    public void checkInAttendee(String attendeeId){
+        Attendee attendee = this.getAttendee(attendeeId);
+        this.checkInService.registerCheckIn(attendee);
     }
 
     private Attendee getAttendee(String attendeeId){
