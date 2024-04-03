@@ -12,17 +12,11 @@ import { BadgeStore } from '@/store/badge-store'
 
 type Props = {
   data: BadgeStore
-  image?: string
   onChangeAvatar?: () => void
   onExpandQRCode?: () => void
 }
 
-export function Credential({
-  data,
-  image,
-  onChangeAvatar,
-  onExpandQRCode,
-}: Props) {
+export function Credential({ data, onChangeAvatar, onExpandQRCode }: Props) {
   return (
     <View className="w-full self-stretch items-center">
       <Image
@@ -46,10 +40,10 @@ export function Credential({
           <View className="w-40 h-40 bg-black rounded-full" />
         </ImageBackground>
 
-        {image ? (
+        {data.image ? (
           <TouchableOpacity activeOpacity={0.9} onPress={onChangeAvatar}>
             <Image
-              source={{ uri: image }}
+              source={{ uri: data.image }}
               className="w-36 h-36 rounded-full -mt-[88px]"
             />
           </TouchableOpacity>
