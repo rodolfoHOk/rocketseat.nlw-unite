@@ -16,6 +16,8 @@
 - expo-image-picker
 - react-native-svg
 - react-native-qrcode-svg
+- @react-native-async-storage/async-storage
+- zustand
 
 ## Links úteis
 
@@ -25,3 +27,5 @@
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Icons Expo](https://icons.expo.fyi/Index)
 - [Expo ImagePicker](https://docs.expo.dev/versions/latest/sdk/imagepicker/)
+- [Expo AsyncStorage](https://docs.expo.dev/versions/latest/sdk/async-storage/)
+- [Zustand](https://zustand-demo.pmnd.rs/)

@@ -38,9 +38,12 @@ export default function Register() {
             onPress: () => router.push('/ticket'),
           },
         ])
+      } else {
+        setIsLoading(false)
       }
     } catch (error) {
       console.log(error)
+      setIsLoading(false)
 
       if (axios.isAxiosError(error)) {
         if (
@@ -53,8 +56,6 @@ export default function Register() {
       } else {
         Alert.alert('Inscrição', 'Não foi possível fazer a inscrição')
       }
-    } finally {
-      setIsLoading(false)
     }
   }
 
