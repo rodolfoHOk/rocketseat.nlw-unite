@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
+import { MotiView } from 'moti'
 import { Header } from '@/components/header'
 import { Credential } from '@/components/credential'
 import { Button } from '@/components/button'
@@ -75,12 +76,26 @@ export default function Ticket() {
           onExpandQRCode={() => setExpandeQRCode(true)}
         />
 
-        <FontAwesome
-          name="angle-double-down"
-          size={24}
-          color={colors.gray[300]}
-          className="self-center my-6"
-        />
+        <MotiView
+          from={{
+            translateY: 0,
+          }}
+          animate={{
+            translateY: 10,
+          }}
+          transition={{
+            loop: true,
+            type: 'timing',
+            duration: 700,
+          }}
+        >
+          <FontAwesome
+            name="angle-double-down"
+            size={24}
+            color={colors.gray[300]}
+            className="self-center my-6"
+          />
+        </MotiView>
 
         <Text className="text-white font-bold text-2xl mt-4">
           Compartilhar credencial

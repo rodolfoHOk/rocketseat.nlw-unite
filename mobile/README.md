@@ -18,6 +18,8 @@
 - react-native-qrcode-svg
 - @react-native-async-storage/async-storage
 - zustand
+- react-native-reanimated
+- moti
 
 ## Links úteis
 
@@ -29,3 +31,5 @@
 - [Expo ImagePicker](https://docs.expo.dev/versions/latest/sdk/imagepicker/)
 - [Expo AsyncStorage](https://docs.expo.dev/versions/latest/sdk/async-storage/)
 - [Zustand](https://zustand-demo.pmnd.rs/)
+- [Expo Reanimated](https://docs.expo.dev/versions/latest/sdk/reanimated/)
+- [Moti](https://moti.fyi/)
