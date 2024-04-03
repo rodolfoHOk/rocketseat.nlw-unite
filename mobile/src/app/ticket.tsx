@@ -3,6 +3,7 @@ import {
   Alert,
   Modal,
   ScrollView,
+  Share,
   StatusBar,
   Text,
   TouchableOpacity,
@@ -37,6 +38,19 @@ export default function Ticket() {
     } catch (error) {
       console.error(error)
       Alert.alert('Foto', 'Não foi possível selecionar a imagem!')
+    }
+  }
+
+  async function handleShare() {
+    try {
+      if (badgeStore.data?.checkInURL) {
+        await Share.share({
+          message: badgeStore.data.checkInURL,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      Alert.alert('Compartilhar', 'Não foi possível compartilhar')
     }
   }
 
@@ -76,7 +90,7 @@ export default function Ticket() {
           {`Mostre ao mundo que você vai participar do evento ${badgeStore.data.eventTitle}!`}
         </Text>
 
-        <Button title="Compartilhar" />
+        <Button title="Compartilhar" onPress={handleShare} />
 
         <TouchableOpacity
           activeOpacity={0.7}
