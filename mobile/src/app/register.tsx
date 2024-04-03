@@ -6,20 +6,56 @@ import { Input } from '@/components/input'
 import { Button } from '@/components/button'
 import { colors } from '@/styles/colors'
 import { useState } from 'react'
+import { api } from '@/server/api'
+import axios from 'axios'
+
+const EVENT_ID = '9e9bd979-9d10-4915-b339-3786b1634f33'
 
 export default function Register() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  function handleRegister() {
-    if (!name.trim()) {
-      return Alert.alert('Inscrição', 'Informe seu nome completo!')
-    }
-    if (!email.trim()) {
-      return Alert.alert('Inscrição', 'Informe seu e-mail!')
-    }
+  async function handleRegister() {
+    try {
+      if (!name.trim()) {
+        return Alert.alert('Inscrição', 'Informe seu nome completo!')
+      }
+      if (!email.trim()) {
+        return Alert.alert('Inscrição', 'Informe seu e-mail!')
+      }
 
-    router.push('/ticket')
+      setIsLoading(true)
+
+      const registerResponse = await api.post(`/events/${EVENT_ID}/attendees`, {
+        name,
+        email,
+      })
+      if (registerResponse.data.attendeeId) {
+        Alert.alert('Inscrição', 'Inscrição realizada com sucesso!', [
+          {
+            text: 'Ok',
+            onPress: () => router.push('/ticket'),
+          },
+        ])
+      }
+    } catch (error) {
+      console.log(error)
+
+      if (axios.isAxiosError(error)) {
+        if (
+          String(error.response?.data.message).includes('already registered')
+        ) {
+          Alert.alert('Inscrição', 'Este e-mail já está cadastrado')
+        } else {
+          Alert.alert('Inscrição', 'Não foi possível fazer a inscrição')
+        }
+      } else {
+        Alert.alert('Inscrição', 'Não foi possível fazer a inscrição')
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -59,7 +95,7 @@ export default function Register() {
 
         <Button
           title="Realizar inscrição"
-          isLoading={false}
+          isLoading={isLoading}
           onPress={handleRegister}
         />
 
