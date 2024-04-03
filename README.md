@@ -8,7 +8,7 @@
 
 [React Native Mobile](/mobile/README.md)
 
-[Web](/web/README.md)
+[React Web](/web/README.md)
 
 ## Links úteis
 
