@@ -15,10 +15,14 @@ import { Credential } from '@/components/credential'
 import { Button } from '@/components/button'
 import { colors } from '@/styles/colors'
 import { QRCode } from '@/components/qrcode'
+import { useBadgeStore } from '@/store/badge-store'
+import { Redirect } from 'expo-router'
 
 export default function Ticket() {
   const [image, setImage] = useState('')
   const [expandeQRCode, setExpandeQRCode] = useState(false)
+
+  const badgeStore = useBadgeStore()
 
   async function handleSelectImage() {
     try {
@@ -35,6 +39,10 @@ export default function Ticket() {
       console.error(error)
       Alert.alert('Foto', 'Não foi possível selecionar a imagem!')
     }
+  }
+
+  if (!badgeStore.data?.checkInURL) {
+    return <Redirect href="/" />
   }
 
   return (
@@ -71,7 +79,11 @@ export default function Ticket() {
 
         <Button title="Compartilhar" />
 
-        <TouchableOpacity activeOpacity={0.7} className="mt-10">
+        <TouchableOpacity
+          activeOpacity={0.7}
+          className="mt-10"
+          onPress={() => badgeStore.remove()}
+        >
           <Text className="text-base text-white font-bold text-center">
             Remover Ingresso
           </Text>
