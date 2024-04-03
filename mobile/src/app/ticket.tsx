@@ -57,6 +57,7 @@ export default function Ticket() {
         showsVerticalScrollIndicator={false}
       >
         <Credential
+          data={badgeStore.data}
           image={image}
           onChangeAvatar={handleSelectImage}
           onExpandQRCode={() => setExpandeQRCode(true)}
@@ -74,7 +75,7 @@ export default function Ticket() {
         </Text>
 
         <Text className="text-white font-regular text-base mt-1 mb-6">
-          Mostre ao mundo que você vai participar do Unite Summit!
+          {`Mostre ao mundo que você vai participar do evento ${badgeStore.data.eventTitle}!`}
         </Text>
 
         <Button title="Compartilhar" />
