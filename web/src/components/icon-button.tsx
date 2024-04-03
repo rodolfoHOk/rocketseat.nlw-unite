@@ -17,6 +17,7 @@ export function IconButton({
         ${transparent ? 'bg-black/20' : 'bg-white/10'}
         ${disabled ? 'opacity-50' : 'hover:bg-white/20'} ${className}`}
       {...rest}
+      disabled={disabled}
     >
       {children}
     </button>
