@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: passin-deployment
+  label:
+    app: passin
+
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: passin
+  template:
+    metadata:
+      labels:
+        app: passin
+    spec:
+      containers:
+        - name: passin
+          image: rodolfohok/nlw.service.passin:4249b91
+          env:
+            - name: DATABASE_URL
+              # value: db-connection-of-digital-ocean
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection
+                  key: url
+            - name: API_BASE_URL
+              # value: http://localhost:3333
+              valueFrom:
+                configMapKeyRef:
+                  name: nlw-env
+                  key: url
+          ports:
+            - containerPort: 3333
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: 400m
+              memory: 512Mi
