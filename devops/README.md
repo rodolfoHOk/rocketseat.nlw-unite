@@ -25,10 +25,14 @@
 - k3d cluster create nlw-unite --servers 2
 - kubectl cluster-info
 
+---
+
 - kubectl get nodes
 - kubectl get pods
 - kubectl get pods -n nlw
 - kubectl get pods -n kube-system
+
+---
 
 - kubectl create ns test
 - kubectl get pods -n test
@@ -40,6 +44,8 @@
 - kubectl apply -f k8s-example-with-nginx -n test
 - kubectl get service -n test
 - kubectl port-forward svc/nginx-service -n test 3333:80
+
+---
 
 - kubectl create ns nlw
 - kubectl apply -f k8s -n nlw
