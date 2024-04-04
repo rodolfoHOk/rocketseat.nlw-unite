@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react'
 
-interface TableCellProps extends ComponentProps<'th'> {}
+interface TableCellProps extends ComponentProps<'td'> {}
 
 export function TableCell({ className, ...rest }: TableCellProps) {
   return (
