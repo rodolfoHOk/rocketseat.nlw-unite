@@ -81,12 +81,11 @@ CREATE UNIQUE INDEX "attendees_event_id_email_key" ON "attendees"("event_id", "e
 CREATE UNIQUE INDEX "check_ins_attendeeId_key" ON "check_ins"("attendeeId");
 ```
 
-## Deploy
+## Devops
+
+### Docker
 
 - docker image build: docker build -t rodolfohok/passin:v1 .
-
 - test docker image: docker run --name passin -p 3001:3333 -d rodolfohok/passin:v1
-
 - run docker compose: docker compose up --build -d
-
 - stop docker compose: docker compose down
