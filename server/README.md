@@ -86,3 +86,7 @@ CREATE UNIQUE INDEX "check_ins_attendeeId_key" ON "check_ins"("attendeeId");
 - docker image build: docker build -t rodolfohok/passin:v1 .
 
 - test docker image: docker run --name passin -p 3001:3333 -d rodolfohok/passin:v1
+
+- run docker compose: docker compose up --build -d
+
+- stop docker compose: docker compose down
