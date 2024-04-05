@@ -137,7 +137,34 @@
 - kubectl create ns nlw
 - [browser] http://localhost:3001 sync
 - watch kubectl get pods -n nlw
+- add load balancer git commit
+- kubectl port-forward svc/argocd-server -n argocd 3001:80
+- [browser] http://localhost:3001 sync
+- watch kubectl get pods -n nlw
+- kubectl get svc -n nlw
+- [browser] [external ip]/docs
+- [browser] [external ip]/healthz
+
+### New Relic
+
+- New Relic Dashboard
+- All Entities -> Kubernetes -> Helm -> Create a new key -> Continue
+- Preencher cluster name -> Continue
+- Manter -> Continue
+- Manter -> Continue
+- -> Copy to clipboard
+- Colar e rodar no terminal
+- [browser] http://localhost:3001 sync
+- -> Continue
+- -> Test connection
+- -> See your data
+- -> [cluster name]
+- Summary
+- Overview Dashboard
+- Control Plane
 
 ### Links úteis
 
 - [Argo CD Docs](https://argo-cd.readthedocs.io/en/stable)
+- [New Relic](https://newrelic.com/welcome-back)
+- [New Relic Dashboard](https://one.newrelic.com)
