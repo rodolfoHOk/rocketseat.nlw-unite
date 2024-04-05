@@ -13,15 +13,6 @@
 - Microsoft.EntityFrameworkCore
 - Microsoft.EntityFrameworkCore.Sqlite
 
-## Melhorias
-
-- [FluentValidation](https://docs.fluentvalidation.net/en/latest/)
-- [AutoMapper](https://automapper.org/)
-- Injeção de dependências
-- Task (Assincronismo nas chamadas ao banco de dados)
-- Localização de mensagens (internacionalização)
-- UUID na entidade por causa do SQLite (teria que mudar o banco)
-
 ## DotNet
 
 ### Criando Estrutura do projeto
@@ -64,4 +55,13 @@
 
 ### Testar
 
-- http://localhost:5211/swagger/index.html
+- http://localhost:5210/swagger/index.html
+
+## Melhorias
+
+- [FluentValidation](https://docs.fluentvalidation.net/en/latest/)
+- [AutoMapper](https://automapper.org/)
+- Injeção de dependências
+- Task (Assincronismo nas chamadas ao banco de dados)
+- Localização de mensagens (internacionalização)
+- UUID na entidade por causa do SQLite (teria que mudar o banco)
