@@ -2,7 +2,7 @@ replicaCount: 5
 image:
   repository: rodolfohok/nlw.service.passin
   pullPolicy: IfNotPresent
-  tag: 92c834e
+  tag: 68851c1
   port: 3333
 imagePullSecrets: []
 nameOverride: ''
