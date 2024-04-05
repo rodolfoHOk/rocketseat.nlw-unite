@@ -2,7 +2,7 @@ replicaCount: 5
 image:
   repository: rodolfohok/nlw.service.passin
   pullPolicy: IfNotPresent
-  tag: 87a9445
+  tag: 5cd4771
   port: 3333
 imagePullSecrets: []
 nameOverride: ''
@@ -17,7 +17,7 @@ podLabels: {}
 podSecurityContext: {}
 securityContext: {}
 service:
-  type: LoadBalancer # AWS LoadBalancer # Local ClusterIP
+  type: LoadBalancer
   port: 80
 ingress:
   enabled: false
