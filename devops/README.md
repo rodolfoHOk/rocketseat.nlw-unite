@@ -116,6 +116,11 @@
 - kubectl port-forward svc/nlw-passin-deploy -n nlw 3333:80
 - [browser] http://localhost:3333/docs
 
+#### Adicionando healthz endpoint
+
+- kubectl port-forward svc/nlw-passin-deploy -n nlw 3333:80
+- [browser] http://localhost:3333/healthz
+
 ### Links úteis
 
 - [Argo CD Docs](https://argo-cd.readthedocs.io/en/stable)
