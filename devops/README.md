@@ -111,6 +111,10 @@
 - kubectl delete -n nlw-helm
 - kubectl create ns nlw
 - kubectl port-forward svc/argocd-server -n argocd 3001:80
+- [browser] http://localhost:3001
+- watch kubectl get pods -n nlw
+- kubectl port-forward svc/nlw-passin-deploy -n nlw 3333:80
+- [browser] http://localhost:3333/docs
 
 ### Links úteis
 
