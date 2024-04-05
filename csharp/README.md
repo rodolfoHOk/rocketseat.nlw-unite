@@ -10,7 +10,8 @@
 
 ### Bibliotecas adicionais
 
--
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.Sqlite
 
 ## Links úteis
 
@@ -40,3 +41,22 @@
 - dotnet add PassIn.Application reference PassIn.Communication
 - dotnet add PassIn.Application reference PassIn.Exceptions
 - dotnet add PassIn.Application reference PassIn.Infrastructure
+
+### Instalando dependências
+
+- dotnet add PassIn.Infrastructure package Microsoft.EntityFrameworkCore --version 8.0.3
+- dotnet add PassIn.Infrastructure package Microsoft.EntityFrameworkCore.Sqlite --version 8.0.3
+
+## Rodar
+
+### Requisitos
+
+- .NET 8.0 sdk and runtime instalados
+
+### Comandos
+
+- dotnet run --project PassIn.Api
+
+### Testar
+
+- http://localhost:5211/swagger/index.html
