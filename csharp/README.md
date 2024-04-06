@@ -57,7 +57,7 @@
 
 - http://localhost:5210/swagger/index.html
 
-## Melhorias
+## Ideias de Melhorias
 
 - [FluentValidation](https://docs.fluentvalidation.net/en/latest/)
 - [AutoMapper](https://automapper.org/)
@@ -66,3 +66,6 @@
 - Localização de mensagens (internacionalização)
 - UUID na entidade por causa do SQLite (teria que mudar o banco)
 - Criar camada Repositories (Não acessar o DbContext diretamente)
+- Relação de um participante para um check-in (está um para muitos no banco)
+- Teste de unidades
+- Criar camada de Domínio
