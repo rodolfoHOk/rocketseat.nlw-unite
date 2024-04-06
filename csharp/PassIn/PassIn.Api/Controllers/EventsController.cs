@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using PassIn.Application.UseCases.Events.GetAttendees;
+using PassIn.Application.UseCases.Events.GetById;
 using PassIn.Application.UseCases.Events.Register;
 using PassIn.Application.UseCases.Events.RegisterAttendee;
 using PassIn.Communication.Requests;
@@ -44,5 +46,16 @@ public class EventsController : ControllerBase
     var response = useCase.Execute(id, request);
     var uri = "http://localhost:5210/api/ateendees/" + response.Id + "/badge";
     return Created(uri, response);
+  }
+
+  [HttpGet]
+  [Route("{id}/attendees")]
+  [ProducesResponseType(typeof(ResponseAttendeesListJson), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+  public IActionResult GetAttendees([FromRoute] Guid id)
+  {
+    var useCase = new GetAttendeesByEventIdUseCase();
+    var response = useCase.Execute(id);
+    return Ok(response);
   }
 }
