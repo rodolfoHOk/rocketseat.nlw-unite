@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PassIn.Application.UseCases.Events.Register;
+using PassIn.Application.UseCases.Events.RegisterAttendee;
 using PassIn.Communication.Requests;
 using PassIn.Communication.Responses;
 
@@ -29,5 +30,19 @@ public class EventsController : ControllerBase
     var useCase = new GetEventByIdUseCase();
     var response = useCase.Execute(id);
     return Ok(response);
+  }
+
+  [HttpPost]
+  [Route("{id}/attendees")]
+  [ProducesResponseType(typeof(ResponseRegisteredAttendeeJson), StatusCodes.Status201Created)]
+  [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+  [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status409Conflict)]
+  public IActionResult RegisterAttendee([FromRoute] Guid id, [FromBody] RequestAttendeeJson request)
+  {
+    var useCase = new RegisterAttendeeOnEventUseCase();
+    var response = useCase.Execute(id, request);
+    var uri = "http://localhost:5210/api/ateendees/" + response.Id + "/badge";
+    return Created(uri, response);
   }
 }

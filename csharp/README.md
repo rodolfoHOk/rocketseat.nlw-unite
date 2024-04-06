@@ -65,3 +65,4 @@
 - Task (Assincronismo nas chamadas ao banco de dados)
 - Localização de mensagens (internacionalização)
 - UUID na entidade por causa do SQLite (teria que mudar o banco)
+- Criar camada Repositories (Não acessar o DbContext diretamente)
