@@ -5,7 +5,7 @@ using PassIn.Infrastructure.Entities;
 
 namespace PassIn.Application.UseCases.Attendees.DoCheckIn;
 
-public class DoAttendeeCheckInUseCase
+public class DoAttendeeCheckInUseCase : IDoAttendeeCheckInUseCase
 {
   private readonly PassInDbContext _dbContext;
 

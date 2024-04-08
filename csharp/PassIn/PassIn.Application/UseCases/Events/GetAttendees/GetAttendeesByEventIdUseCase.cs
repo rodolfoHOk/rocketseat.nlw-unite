@@ -5,7 +5,7 @@ using PassIn.Infrastructure;
 
 namespace PassIn.Application.UseCases.Events.GetAttendees;
 
-public class GetAttendeesByEventIdUseCase
+public class GetAttendeesByEventIdUseCase : IGetAttendeesByEventIdUseCase
 {
   private readonly PassInDbContext _dbContext;
 
@@ -31,7 +31,8 @@ public class GetAttendeesByEventIdUseCase
         Email = attendee.Email,
         CreatedAt = attendee.Created_At,
         CheckedInAt = attendee.CheckIn?.Created_at
-      }).ToList()
+      }).ToList(),
+      Total = entity.Attendees.Count()
     };
   }
 }

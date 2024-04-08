@@ -6,7 +6,7 @@ using PassIn.Infrastructure;
 
 namespace PassIn.Application.UseCases.Events.RegisterAttendee;
 
-public class RegisterAttendeeOnEventUseCase
+public class RegisterAttendeeOnEventUseCase : IRegisterAttendeeOnEventUseCase
 {
   private readonly PassInDbContext _dbContext;
 

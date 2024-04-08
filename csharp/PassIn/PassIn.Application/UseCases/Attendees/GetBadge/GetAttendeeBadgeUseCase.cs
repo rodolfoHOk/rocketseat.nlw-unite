@@ -5,7 +5,7 @@ using PassIn.Infrastructure;
 
 namespace PassIn.Application.UseCases.Attendees.GetBadge;
 
-public class GetAttendeeBadgeUseCase
+public class GetAttendeeBadgeUseCase : IGetAttendeeBadgeUseCase
 {
   private readonly PassInDbContext _dbContext;
 

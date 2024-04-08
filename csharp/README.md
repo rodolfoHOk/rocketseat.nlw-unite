@@ -61,7 +61,7 @@
 
 - [FluentValidation](https://docs.fluentvalidation.net/en/latest/)
 - [AutoMapper](https://automapper.org/)
-- Injeção de dependências
+- Injeção de dependências - OK
 - Task (Assincronismo nas chamadas ao banco de dados)
 - Localização de mensagens (internacionalização)
 - UUID na entidade por causa do SQLite (teria que mudar o banco)

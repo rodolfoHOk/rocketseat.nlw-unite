@@ -4,13 +4,19 @@ using PassIn.Exceptions;
 using PassIn.Infrastructure;
 
 namespace PassIn.Application.UseCases.Events.Register;
-public class RegisterEventUseCase
+public class RegisterEventUseCase : IRegisterEventUseCase
 {
+  private readonly PassInDbContext _dbContext;
+
+  public RegisterEventUseCase()
+  {
+    _dbContext = new PassInDbContext();
+  }
+
   public ResponseRegisteredEventJson Execute(RequestEventJson request)
   {
     Validate(request);
 
-    var dbContext = new PassInDbContext();
     var entity = new Infrastructure.Entities.Event
     {   
       Title = request.Title,
@@ -18,8 +24,8 @@ public class RegisterEventUseCase
       Maximum_Attendees = request.MaximumAttendees,
       Slug = request.Title.ToLower().Replace(" ", "-"),
     };
-    dbContext.Events.Add(entity);
-    dbContext.SaveChanges();
+    _dbContext.Events.Add(entity);
+    _dbContext.SaveChanges();
 
     return new ResponseRegisteredEventJson {
       Id = entity.Id

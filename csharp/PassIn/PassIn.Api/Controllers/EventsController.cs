@@ -15,9 +15,8 @@ public class EventsController : ControllerBase
   [HttpPost]
   [ProducesResponseType(typeof(ResponseRegisteredEventJson), StatusCodes.Status201Created)]
   [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
-  public IActionResult Register([FromBody] RequestEventJson request)
+  public IActionResult Register([FromServices] IRegisterEventUseCase useCase, [FromBody] RequestEventJson request)
   {
-    var useCase = new RegisterEventUseCase();
     var response = useCase.Execute(request);
     var uri = "http://localhost:5210/api/events/" + response.Id;
     return Created(uri, response);
@@ -27,9 +26,8 @@ public class EventsController : ControllerBase
   [Route("{id}")]
   [ProducesResponseType(typeof(ResponseEventJson), StatusCodes.Status200OK)]
   [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
-  public IActionResult GetById([FromRoute] Guid id)
+  public IActionResult GetById([FromServices] IGetEventByIdUseCase useCase, [FromRoute] Guid id)
   {
-    var useCase = new GetEventByIdUseCase();
     var response = useCase.Execute(id);
     return Ok(response);
   }
@@ -40,9 +38,11 @@ public class EventsController : ControllerBase
   [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
   [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
   [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status409Conflict)]
-  public IActionResult RegisterAttendee([FromRoute] Guid id, [FromBody] RequestAttendeeJson request)
+  public IActionResult RegisterAttendee(
+    [FromServices] IRegisterAttendeeOnEventUseCase useCase, 
+    [FromRoute] Guid id, 
+    [FromBody] RequestAttendeeJson request)
   {
-    var useCase = new RegisterAttendeeOnEventUseCase();
     var response = useCase.Execute(id, request);
     var uri = "http://localhost:5210/api/ateendees/" + response.Id + "/badge";
     return Created(uri, response);
@@ -52,9 +52,8 @@ public class EventsController : ControllerBase
   [Route("{id}/attendees")]
   [ProducesResponseType(typeof(ResponseAttendeesListJson), StatusCodes.Status200OK)]
   [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
-  public IActionResult GetAttendees([FromRoute] Guid id)
+  public IActionResult GetAttendees([FromServices] IGetAttendeesByEventIdUseCase useCase, [FromRoute] Guid id)
   {
-    var useCase = new GetAttendeesByEventIdUseCase();
     var response = useCase.Execute(id);
     return Ok(response);
   }
