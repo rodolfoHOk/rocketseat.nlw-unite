@@ -1,27 +1,22 @@
-using Microsoft.EntityFrameworkCore;
 using PassIn.Communication.Responses;
 using PassIn.Exceptions;
-using PassIn.Infrastructure;
 
 namespace PassIn.Application.UseCases.Attendees.GetBadge;
 
 public class GetAttendeeBadgeUseCase : IGetAttendeeBadgeUseCase
 {
-  private readonly PassInDbContext _dbContext;
+  private readonly IAttendeeRepository _attendeeRepository;
 
-  public GetAttendeeBadgeUseCase()
+  public GetAttendeeBadgeUseCase(IAttendeeRepository attendeeRepository)
   {
-    _dbContext = new PassInDbContext();
+    _attendeeRepository = attendeeRepository;
   }
 
   public ResponseAttendeeBadgeJson Execute(Guid attendeeId)
   {
-    var entity = _dbContext.Attendees.Include(at => at.Event).Include(at => at.CheckIn)
-      .FirstOrDefault(at => at.Id == attendeeId);
-    if (entity == null) {
+    var entity = _attendeeRepository.FindByIdIncludesEventAndCheckIn(attendeeId) ??
       throw new NotFoundException("An attendee with this id does not exist.");
-    }
-
+    
     return new ResponseAttendeeBadgeJson
     {
       badge = new AttendeeBadgeDTO {

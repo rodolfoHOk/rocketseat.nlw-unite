@@ -1,27 +1,22 @@
-using Microsoft.EntityFrameworkCore;
 using PassIn.Communication.Responses;
 using PassIn.Exceptions;
-using PassIn.Infrastructure;
 
 namespace PassIn.Application.UseCases.Events.GetAttendees;
 
 public class GetAttendeesByEventIdUseCase : IGetAttendeesByEventIdUseCase
 {
-  private readonly PassInDbContext _dbContext;
+  private readonly IEventRepository _eventRepository;
 
-  public GetAttendeesByEventIdUseCase()
+  public GetAttendeesByEventIdUseCase(IEventRepository eventRepository)
   {
-    _dbContext = new PassInDbContext();
+    _eventRepository = eventRepository;
   }
 
   public ResponseAttendeesListJson Execute(Guid eventId)
   {
-    var entity = _dbContext.Events.Include(ev => ev.Attendees)
-      .ThenInclude(attendee => attendee.CheckIn)
-      .FirstOrDefault(ev => ev.Id == eventId);
-    if (entity is null)
+    var entity = _eventRepository.FindByIdIncludesAttendeesWithCheckIns(eventId) ??
       throw new NotFoundException("An event with this id does not exist.");
-    
+        
     return new ResponseAttendeesListJson
     {
       Attendees = entity.Attendees.Select(attendee => new ResponseAttendeeJson

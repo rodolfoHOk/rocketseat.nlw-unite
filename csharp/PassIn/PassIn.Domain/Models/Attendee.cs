@@ -1,4 +1,4 @@
-namespace PassIn.Infrastructure.Entities;
+namespace PassIn.Domain.Models;
 
 public class Attendee
 {

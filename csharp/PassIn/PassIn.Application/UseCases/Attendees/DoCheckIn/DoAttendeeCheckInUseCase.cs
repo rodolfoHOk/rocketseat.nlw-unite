@@ -1,17 +1,20 @@
 using PassIn.Communication.Responses;
+using PassIn.Domain.Models;
 using PassIn.Exceptions;
-using PassIn.Infrastructure;
-using PassIn.Infrastructure.Entities;
 
 namespace PassIn.Application.UseCases.Attendees.DoCheckIn;
 
 public class DoAttendeeCheckInUseCase : IDoAttendeeCheckInUseCase
 {
-  private readonly PassInDbContext _dbContext;
+  private readonly ICheckInRepository _checkInRepository;
+  private readonly IAttendeeRepository _attendeeRepository;
 
-  public DoAttendeeCheckInUseCase()
+  public DoAttendeeCheckInUseCase(
+    ICheckInRepository checkInRepository,
+    IAttendeeRepository attendeeRepository)
   {
-    _dbContext = new PassInDbContext();
+    _checkInRepository = checkInRepository;
+    _attendeeRepository = attendeeRepository;
   }
 
   public ResponseRegisteredJson Execute(Guid attendeeId)
@@ -23,8 +26,7 @@ public class DoAttendeeCheckInUseCase : IDoAttendeeCheckInUseCase
       Attendee_Id = attendeeId,
       Created_at = DateTime.UtcNow
     };
-    _dbContext.CheckIns.Add(entity);
-    _dbContext.SaveChanges();
+    _checkInRepository.Add(entity);
 
     return new ResponseRegisteredJson
     {
@@ -34,11 +36,11 @@ public class DoAttendeeCheckInUseCase : IDoAttendeeCheckInUseCase
 
   private void Validate(Guid attendeeId)
   {
-    var existAttendee = _dbContext.Attendees.Any(attendee => attendee.Id == attendeeId);
+    var existAttendee = _attendeeRepository.ExistsById(attendeeId);
     if (existAttendee == false)
       throw new NotFoundException("The attendee with this Id was not found.");
 
-    var existCheckIn = _dbContext.CheckIns.Any(ch => ch.Attendee_Id == attendeeId);
+    var existCheckIn = _checkInRepository.ExistsByAttendeeId(attendeeId);
     if (existCheckIn)
       throw new ConflictException("Attendee can not do checking twice in the same event.");
   }

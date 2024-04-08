@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PassIn.Infrastructure.Entities;
+using PassIn.Domain.Models;
 
 namespace PassIn.Infrastructure;
 

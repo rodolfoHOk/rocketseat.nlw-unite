@@ -1,33 +1,34 @@
 using System.Net.Mail;
 using PassIn.Communication.Requests;
 using PassIn.Communication.Responses;
+using PassIn.Domain.Models;
 using PassIn.Exceptions;
-using PassIn.Infrastructure;
 
 namespace PassIn.Application.UseCases.Events.RegisterAttendee;
 
 public class RegisterAttendeeOnEventUseCase : IRegisterAttendeeOnEventUseCase
 {
-  private readonly PassInDbContext _dbContext;
+  private readonly IAttendeeRepository _attendeeRepository;
+  private readonly IEventRepository _eventRepository;
 
-  public RegisterAttendeeOnEventUseCase()
+  public RegisterAttendeeOnEventUseCase(IAttendeeRepository attendeeRepository, IEventRepository eventRepository)
   {
-    _dbContext = new PassInDbContext();
+    _attendeeRepository = attendeeRepository;
+    _eventRepository = eventRepository;
   }
 
   public ResponseRegisteredAttendeeJson Execute(Guid eventId, RequestAttendeeJson request)
   {
     Validate(eventId, request);
 
-    var entity = new Infrastructure.Entities.Attendee
+    var entity = new Attendee
     {   
       Email = request.Email,
       Name = request.Name,
       Event_Id = eventId,
       Created_At = DateTime.UtcNow,
     };
-    _dbContext.Attendees.Add(entity);
-    _dbContext.SaveChanges();
+    _attendeeRepository.Add(entity);
 
     return new ResponseRegisteredAttendeeJson
     {
@@ -37,22 +38,20 @@ public class RegisterAttendeeOnEventUseCase : IRegisterAttendeeOnEventUseCase
 
   private void Validate(Guid eventId, RequestAttendeeJson request)
   {
-    var eventEntity = _dbContext.Events.Find(eventId);
-    if (eventEntity is null)
+    var eventEntity = _eventRepository.FindById(eventId) ?? 
       throw new NotFoundException("An event with this id does not exist.");
-
+        
     if (string.IsNullOrWhiteSpace(request.Name))
       throw new ErrorOnValidationException("The name is invalid.");
 
     if (EmailIsValid(request.Email) == false)
       throw new ErrorOnValidationException("The e-mail is invalid.");
 
-    var attendeeAlreadyRegistered = _dbContext.Attendees
-        .Any(attendee => attendee.Email.Equals(request.Email) && attendee.Event_Id.Equals(eventId));
+    var attendeeAlreadyRegistered = _attendeeRepository.ExistsByEmailAndEventId(request.Email, eventId);
     if (attendeeAlreadyRegistered)
       throw new ConflictException("You can not register twice on the event.");
 
-    var attendeesForEvent = _dbContext.Attendees.Count(attendee => attendee.Event_Id.Equals(eventId));
+    var attendeesForEvent = _attendeeRepository.CountByEventId(eventId);
     if (attendeesForEvent >= eventEntity.Maximum_Attendees)
       throw new ErrorOnValidationException("There is no room for this event.");
   }

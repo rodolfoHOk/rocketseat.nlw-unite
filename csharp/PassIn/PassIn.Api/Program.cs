@@ -9,6 +9,10 @@ using PassIn.Application.UseCases.Events.RegisterAttendee;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IAttendeeRepository, AttendeeRepository>();
+builder.Services.AddScoped<ICheckInRepository, CheckInRepository>();
+
 builder.Services.AddScoped<IRegisterEventUseCase, RegisterEventUseCase>();
 builder.Services.AddScoped<IGetEventByIdUseCase, GetEventByIdUseCase>();
 builder.Services.AddScoped<IRegisterAttendeeOnEventUseCase, RegisterAttendeeOnEventUseCase>();

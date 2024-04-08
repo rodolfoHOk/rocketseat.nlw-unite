@@ -57,15 +57,27 @@
 
 - http://localhost:5210/swagger/index.html
 
+## Melhorias implementadas
+
+- Injeção de dependências
+- Criar camada de Domínio
+- Criar camada Repositories (Não acessar o DbContext diretamente)
+
+### Comandos DotNet utilizados para Melhorias implementadas
+
+- dotnet new classlib --output PassIn.Domain
+- dotnet sln add PassIn.Domain
+- dotnet add PassIn.Application reference PassIn.Domain
+- dotnet add PassIn.Infrastructure reference PassIn.Domain
+- dotnet remove PassIn.Application reference PassIn.Infrastructure
+- dotnet add PassIn.Api reference PassIn.Infrastructure (for DI)
+
 ## Ideias de Melhorias
 
-- [FluentValidation](https://docs.fluentvalidation.net/en/latest/)
-- [AutoMapper](https://automapper.org/)
-- Injeção de dependências - OK
 - Task (Assincronismo nas chamadas ao banco de dados)
-- Localização de mensagens (internacionalização)
-- UUID na entidade por causa do SQLite (teria que mudar o banco)
-- Criar camada Repositories (Não acessar o DbContext diretamente)
-- Relação de um participante para um check-in (está um para muitos no banco)
 - Teste de unidades
-- Criar camada de Domínio
+- [AutoMapper](https://automapper.org/)
+- [FluentValidation](https://docs.fluentvalidation.net/en/latest/)
+- Relação de um participante para um check-in (está um para muitos no banco)
+- UUID na entidade por causa do SQLite (teria que mudar o banco)
+- Localização de mensagens (internacionalização)

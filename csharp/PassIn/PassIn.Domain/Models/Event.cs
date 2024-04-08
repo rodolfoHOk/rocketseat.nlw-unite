@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PassIn.Infrastructure.Entities;
+namespace PassIn.Domain.Models;
 
 public class Event
 {
